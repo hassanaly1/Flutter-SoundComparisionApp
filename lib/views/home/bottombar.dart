@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:sound_app/utilities/colors.dart';
-import 'package:sound_app/views/home/components/custom_searchbar.dart';
+import 'package:sound_app/views/home/components/add_member_sheet.dart';
 import 'package:sound_app/views/home/home_screen.dart';
-import 'package:sound_app/widgets/custom_text_widget.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -77,7 +75,7 @@ class _BottomBarState extends State<BottomBar> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primaryColor,
         onPressed: () {
-          openBottomSheet(context);
+          addMemberBottomSheet(context);
         },
         tooltip: 'New Challenge',
         shape: const CircleBorder(side: BorderSide.none),
@@ -88,80 +86,4 @@ class _BottomBarState extends State<BottomBar> {
       ),
     );
   }
-}
-
-void openBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    builder: (BuildContext context) {
-      bool value = false;
-      return Container(
-        width: double.infinity,
-        height: double.infinity,
-        decoration: BoxDecoration(
-            color: AppColors.backgroundColor,
-            borderRadius: const BorderRadius.only(
-                topLeft: Radius.circular(30.0),
-                topRight: Radius.circular(30.0))),
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: CustomTextWidget(text: 'Cancel', fSize: 12.0),
-                  ),
-                  CustomTextWidget(
-                    text: 'New Challenge',
-                    fSize: 16.0,
-                    fWeight: FontWeight.w700,
-                  ),
-                  TextButton(
-                    onPressed: () {
-                      Get.back();
-                    },
-                    child: CustomTextWidget(text: 'Next', fSize: 12.0),
-                  ),
-                ],
-              ),
-              const SizedBox(height: 16.0),
-              const CustomSearchBar(),
-              const SizedBox(height: 16.0),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  physics: AlwaysScrollableScrollPhysics(),
-                  itemCount: 16,
-                  itemBuilder: (context, index) {
-                    return ListTile(
-                      leading: CircleAvatar(
-                        backgroundColor: Colors.red,
-                      ),
-                      title: CustomTextWidget(
-                        text: 'Michael John',
-                        fSize: 16.0,
-                        fWeight: FontWeight.w300,
-                      ),
-                      trailing: Checkbox(
-                        onChanged: (bool? value) {
-                          value = value;
-                        },
-                        value: false, // Replace with your boolean variable
-                      ),
-                    );
-                  },
-                ),
-              )
-            ],
-          ),
-        ),
-      );
-    },
-  );
 }

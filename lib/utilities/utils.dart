@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:sound_app/utilities/colors.dart';
 
 class Utils {
   void toastMessage(String message) {
@@ -8,7 +9,7 @@ class Utils {
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
         timeInSecForIosWeb: 2,
-        backgroundColor: const Color(0xffFF6C6C),
+        backgroundColor: AppColors.primaryColor,
         textColor: Colors.white,
         fontSize: 16.0);
   }

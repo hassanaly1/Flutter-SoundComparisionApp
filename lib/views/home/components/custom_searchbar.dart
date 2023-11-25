@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomSearchBar extends StatelessWidget {
+  final ValueChanged<String>? onChanged;
+
   const CustomSearchBar({
-    super.key,
-  });
+    Key? key,
+    this.onChanged,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,15 +26,21 @@ class CustomSearchBar extends StatelessWidget {
               children: [
                 SvgPicture.asset('assets/images/icon-search.svg'),
                 const SizedBox(width: 10.0),
-                const Expanded(
+                Expanded(
                   child: TextField(
+                    onChanged: onChanged,
                     decoration: InputDecoration(
-                      hintText: 'Search',
-                      hintStyle: TextStyle(
-                          color: Colors.black87, fontWeight: FontWeight.w300),
                       border: InputBorder.none,
+                      hintText: 'Search',
+                      hintStyle: GoogleFonts.poppins(
+                        color: Colors.black87,
+                        fontWeight: FontWeight.w200,
+                      ),
                     ),
-                    style: TextStyle(color: Colors.black87),
+                    style: GoogleFonts.poppins(
+                      color: Colors.black87,
+                      fontWeight: FontWeight.w200,
+                    ),
                   ),
                 ),
               ],

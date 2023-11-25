@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 class CustomTextField extends StatelessWidget {
   final String hintText;
@@ -8,26 +9,35 @@ class CustomTextField extends StatelessWidget {
     super.key,
     required this.hintText,
     this.controller,
-    required this.fillColor,
+    this.fillColor = const Color(0xFFEAF0F5),
   });
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
-      style: const TextStyle(
-        fontWeight: FontWeight.w300,
+      style: GoogleFonts.poppins(
+        fontSize: 16,
+        fontWeight: FontWeight.w400,
         color: Colors.black,
       ),
       controller: controller,
       decoration: InputDecoration(
         filled: true,
         fillColor: fillColor,
-        hintStyle: const TextStyle(color: Colors.grey, fontSize: 14),
-        border: const OutlineInputBorder(
+        hintStyle: GoogleFonts.poppins(
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+          color: Colors.grey,
+        ),
+        border: OutlineInputBorder(
+          borderRadius:
+              BorderRadius.circular(50.0), // Adjust the radius as needed
           borderSide: BorderSide.none,
         ),
-        focusedBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.black), // Focused border color
+        focusedBorder: OutlineInputBorder(
+          borderRadius:
+              BorderRadius.circular(20.0), // Adjust the radius as needed
+          borderSide: BorderSide(color: Colors.black),
         ),
         hintText: hintText,
       ),
