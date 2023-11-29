@@ -5,16 +5,6 @@ import 'package:sound_app/widgets/custom_text_widget.dart';
 
 import 'custom_searchbar.dart';
 
-void addMemberBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return const AddMemberBottomSheet();
-    },
-  );
-}
-
 class AddMemberBottomSheet extends StatefulWidget {
   const AddMemberBottomSheet({Key? key}) : super(key: key);
 
@@ -137,10 +127,13 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
                       children: [
                         Stack(
                           children: [
-                            CircleAvatar(
-                              backgroundColor: Colors.grey.shade200,
-                              radius: 25,
-                              backgroundImage: NetworkImage(member.imageUrl),
+                            ClipOval(
+                              child: Image.asset(
+                                fit: BoxFit.cover,
+                                member.imageUrl,
+                                width: 80.0,
+                                height: 80.0,
+                              ),
                             ),
                             Positioned(
                               top: 0,

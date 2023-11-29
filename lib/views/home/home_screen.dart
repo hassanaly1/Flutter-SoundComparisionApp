@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sound_app/models/group_model.dart';
 import 'package:sound_app/utilities/colors.dart';
+import 'package:sound_app/views/profile/profile_screen.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
 
 import 'components/custom_group_container.dart';
@@ -27,52 +29,55 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: AppColors.backgroundColor,
         body: Padding(
-      padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Align(
-            alignment: Alignment.centerRight,
-            child: Container(
-                decoration: BoxDecoration(
-                    color: AppColors.primaryColor,
-                    //shape: BoxShape.circle,
-                    borderRadius: BorderRadius.circular(10.0)),
-                child: Image.asset(
-                  'assets/images/user.jpg',
-                  height: 50,
-                )),
-          ),
-          CustomTextWidget(
-            text: 'Your Challenges',
-            fSize: 20.0,
-            fWeight: FontWeight.w700,
-          ),
-          const SizedBox(height: 15.0),
-          Expanded(
-            child: ListView(
-              children: [
-                ListView.builder(
-                  itemCount: groups.length,
-                  shrinkWrap: true,
-                  physics: AlwaysScrollableScrollPhysics(),
-                  itemBuilder: (context, index) {
-                    ChallengeModel group = groups[index];
-                    Color groupColor = Colors.orange.shade200;
-
-                    return CustomChallengeContainer(
-                      challengeName: group.name,
-                      challengeMembersCount: group.membersCount,
-                      color: groupColor,
-                    );
+          padding: const EdgeInsets.symmetric(vertical: 25.0, horizontal: 10.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Align(
+                alignment: Alignment.centerRight,
+                child: InkWell(
+                  onTap: () {
+                    Get.to(ProfileScreen(), transition: Transition.upToDown);
                   },
+                  child: ClipOval(
+                    child: Image.asset(
+                      'assets/images/user.jpg',
+                      height: 80,
+                    ),
+                  ),
                 ),
-              ],
-            ),
-          )
-        ],
-      ),
-    ));
+              ),
+              CustomTextWidget(
+                text: 'Your Challenges',
+                fSize: 20.0,
+                fWeight: FontWeight.w700,
+              ),
+              const SizedBox(height: 15.0),
+              Expanded(
+                child: ListView(
+                  children: [
+                    ListView.builder(
+                      itemCount: groups.length,
+                      shrinkWrap: true,
+                      physics: AlwaysScrollableScrollPhysics(),
+                      itemBuilder: (context, index) {
+                        ChallengeModel group = groups[index];
+                        Color groupColor = Colors.orange.shade200;
+
+                        return CustomChallengeContainer(
+                          challengeName: group.name,
+                          challengeMembersCount: group.membersCount,
+                          color: groupColor,
+                        );
+                      },
+                    ),
+                  ],
+                ),
+              )
+            ],
+          ),
+        ));
   }
 }

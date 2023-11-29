@@ -1,20 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:sound_app/utilities/colors.dart';
-import 'package:sound_app/views/home/components/add_member_sheet.dart';
+import 'package:sound_app/views/components/social_media_sharing_dialog.dart';
 import 'package:sound_app/views/home/home_screen.dart';
-
-class ProfileScreen extends StatelessWidget {
-  const ProfileScreen({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: Text('Profile Screen Content'),
-      ),
-    );
-  }
-}
+import 'package:sound_app/views/profile/profile_screen.dart';
 
 class BottomBar extends StatefulWidget {
   const BottomBar({Key? key}) : super(key: key);
