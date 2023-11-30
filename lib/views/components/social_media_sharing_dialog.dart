@@ -6,17 +6,16 @@ import 'package:sound_app/views/components/social_media_card.dart';
 import 'package:sound_app/widgets/custom_button.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
 
-void addMemberBottomSheet(BuildContext context) {
-  showModalBottomSheet(
-    context: context,
-    isScrollControlled: true,
-    builder: (BuildContext context) {
-      return SocialMediaSharingBottomSheet();
-    },
-  );
+class SocialMediaSharingBottomSheet extends StatefulWidget {
+  SocialMediaSharingBottomSheet({super.key});
+
+  @override
+  State<SocialMediaSharingBottomSheet> createState() =>
+      _SocialMediaSharingBottomSheetState();
 }
 
-class SocialMediaSharingBottomSheet extends StatelessWidget {
+class _SocialMediaSharingBottomSheetState
+    extends State<SocialMediaSharingBottomSheet> {
   List<Member> members = [
     Member('John Doe', 'assets/images/user.jpg'),
     Member('Jane Smith', 'assets/images/user2.jpg'),
@@ -28,7 +27,6 @@ class SocialMediaSharingBottomSheet extends StatelessWidget {
     Member('Sarah Miller', 'assets/images/user8.jpg'),
     Member('Daniel Wilson', 'assets/images/user5.jpg'),
   ];
-  SocialMediaSharingBottomSheet({super.key});
 
   @override
   Widget build(BuildContext context) {

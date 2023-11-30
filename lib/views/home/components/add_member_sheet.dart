@@ -52,14 +52,14 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
         controller: _pageController,
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          _buildMemberListPage(),
+          _buildAddMemberListPage(),
           _buildGroupInfoPage(selectedMembers),
         ],
       ),
     );
   }
 
-  Widget _buildMemberListPage() {
+  Widget _buildAddMemberListPage() {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
@@ -131,8 +131,8 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
                               child: Image.asset(
                                 fit: BoxFit.cover,
                                 member.imageUrl,
-                                width: 80.0,
-                                height: 80.0,
+                                width: 60.0,
+                                height: 60.0,
                               ),
                             ),
                             Positioned(

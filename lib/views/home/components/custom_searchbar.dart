@@ -20,21 +20,28 @@ class CustomSearchBar extends StatelessWidget {
           borderRadius: BorderRadius.circular(20.0),
           color: Colors.grey[200],
         ),
-        child: TextField(
-          onChanged: onChanged,
-          decoration: InputDecoration(
-            prefixIcon: SvgPicture.asset('assets/images/icon-search.svg'),
-            border: InputBorder.none,
-            hintText: 'Search',
-            hintStyle: GoogleFonts.poppins(
-              color: Colors.black87,
-              fontWeight: FontWeight.w200,
+        child: Row(
+          children: [
+            SvgPicture.asset('assets/images/icon-search.svg'),
+            SizedBox(width: 15.0),
+            Expanded(
+              child: TextField(
+                onChanged: onChanged,
+                decoration: InputDecoration(
+                  border: InputBorder.none,
+                  hintText: 'Search',
+                  hintStyle: GoogleFonts.poppins(
+                    color: Colors.black87,
+                    fontWeight: FontWeight.w200,
+                  ),
+                ),
+                style: GoogleFonts.poppins(
+                  color: Colors.black87,
+                  fontWeight: FontWeight.w200,
+                ),
+              ),
             ),
-          ),
-          style: GoogleFonts.poppins(
-            color: Colors.black87,
-            fontWeight: FontWeight.w200,
-          ),
+          ],
         ),
       ),
     );

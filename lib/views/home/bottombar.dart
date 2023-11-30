@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sound_app/utilities/colors.dart';
-import 'package:sound_app/views/components/social_media_sharing_dialog.dart';
+import 'package:sound_app/views/home/components/challenge_info_screen.dart';
 import 'package:sound_app/views/home/home_screen.dart';
 import 'package:sound_app/views/profile/profile_screen.dart';
 
@@ -63,7 +63,13 @@ class _BottomBarState extends State<BottomBar> {
       floatingActionButton: FloatingActionButton(
         backgroundColor: AppColors.primaryColor,
         onPressed: () {
-          addMemberBottomSheet(context);
+          showModalBottomSheet(
+            context: context,
+            isScrollControlled: true,
+            builder: (BuildContext context) {
+              return const ChallengeInfoScreen();
+            },
+          );
         },
         tooltip: 'New Challenge',
         shape: const CircleBorder(side: BorderSide.none),
