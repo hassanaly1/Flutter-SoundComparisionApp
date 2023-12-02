@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Color(0xFFEAF0F5),
+                  color: const Color(0xFFEAF0F5),
                   borderRadius: BorderRadius.circular(50.0),
                 ),
                 child: Row(
@@ -82,7 +82,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: AppColors.textColor,
               ),
               SizedBox(height: Get.height * 0.02),
-              CustomTextField(
+              const CustomTextField(
                 hintText: 'Email',
               ),
               SizedBox(height: Get.height * 0.02),

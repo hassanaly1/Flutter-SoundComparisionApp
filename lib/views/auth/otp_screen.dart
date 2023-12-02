@@ -124,7 +124,7 @@ class _OtpScreenState extends State<OtpScreen> {
                         children: [
                           CustomTextWidget(
                             text: 'Didn’t receive the code?',
-                            textColor: Color(0XFF717784),
+                            textColor: const Color(0XFF717784),
                             fSize: 15,
                           ),
                           TextButton(
