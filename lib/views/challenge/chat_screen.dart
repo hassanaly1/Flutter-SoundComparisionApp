@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:pinput/pinput.dart';
 import 'package:sound_app/models/chat_message_model.dart';
 import 'package:sound_app/utilities/colors.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
@@ -21,20 +20,38 @@ class _ChatScreenState extends State<ChatScreen> {
   ScrollController scrollController = ScrollController();
 
   List<dynamic> chatMessages = [
-    ChatMessageModel('Hello?', true),
-    ChatMessageModel('Where are you?', true),
-    ChatMessageModel('I am at the location, where are you?', false),
-    ChatMessageModel("I'll be there in 5 minutes.", false),
-    ChatMessageModel("Great, I'll wait for you.", true),
+    ChatMessageModel('Alice', 'Hey!', true),
     ChatMessageModel(
-        'Is there any specific spot you want me to pick you up from?', false),
-    ChatMessageModel("Yes, please pick me up from the front entrance.", true),
-    ChatMessageModel('Sure, I got it.', false),
-    ChatMessageModel('Hello?', true),
-    ChatMessageModel('I am at the location, where are you?', false),
-    ChatMessageModel('I am almost there, just a couple of blocks away.', false),
-    ChatMessageModel('Okay, let me know when you arrive.', true),
-    ChatMessageModel('I have arrived. I am outside the front entrance.', false),
+        'Bob', 'Have you ever tried the sound comparison challenge?', true),
+    ChatMessageModel(
+        'Charlie', 'Sound comparison challenge? What\'s that?', false),
+    ChatMessageModel(
+        'Alice',
+        'It\'s where we play two different sounds and guess which one is which.',
+        true),
+    ChatMessageModel(
+        'Bob', "Sounds interesting! I'm up for the challenge.", false),
+    ChatMessageModel('Alice',
+        'Great! Let me find two intriguing sounds for you to compare.', true),
+    ChatMessageModel('Bob', 'Sure, take your time.', false),
+    ChatMessageModel(
+        'Alice', 'Okay, here\'s the first sound. Guess what it is!', true),
+    ChatMessageModel('Charlie', 'Is it a bird chirping?', false),
+    ChatMessageModel('Alice',
+        'Close, but not quite! It\'s actually a rainforest ambiance.', true),
+    ChatMessageModel('Bob', 'Ah, got it wrong. Ready for the next one?', false),
+    ChatMessageModel('Alice', 'Absolutely! Hit me with the next sound.', true),
+    ChatMessageModel(
+        'Charlie', 'Here it is. What do you think this one is?', true),
+    ChatMessageModel('Bob', 'Sounds like ocean waves?', false),
+    ChatMessageModel(
+        'Alice', 'Bingo! You nailed it. It\'s the sound of ocean waves.', true),
+    ChatMessageModel(
+        'Charlie', 'Haha, that was fun! We should do this more often.', false),
+    ChatMessageModel(
+        'Bob',
+        'Definitely! It\'s a great way to test our audio recognition skills.',
+        true),
   ];
 
   @override
@@ -42,7 +59,7 @@ class _ChatScreenState extends State<ChatScreen> {
     super.initState();
 
     // Scroll to the latest message when the widget is first initialized
-    WidgetsBinding.instance.addPostFrameCallback((_) {
+    WidgetsBinding.instance!.addPostFrameCallback((_) {
       scrollController.jumpTo(scrollController.position.maxScrollExtent);
     });
   }
@@ -63,40 +80,62 @@ class _ChatScreenState extends State<ChatScreen> {
           children: [
             SingleChildScrollView(
               child: Container(
-                  height: Get.height * 0.8,
-                  color: Colors.white60,
-                  child: ListView.builder(
-                    controller: scrollController,
-                    itemCount: chatMessages.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      final message = chatMessages[index];
+                height: Get.height * 0.8,
+                color: Colors.white60,
+                child: ListView.builder(
+                  controller: scrollController,
+                  itemCount: chatMessages.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    final message = chatMessages[index];
 
-                      return Align(
-                        alignment: message.isSender
-                            ? Alignment.centerRight
-                            : Alignment.centerLeft,
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: message.isSender
-                                  ? AppColors.primaryColor
-                                  : Colors.grey.shade200,
-                              borderRadius: BorderRadius.circular(12),
-                            ),
-                            padding: const EdgeInsets.all(12),
-                            child: CustomTextWidget(
-                              text: message.message,
-                              fSize: 14,
-                              textColor: message.isSender
-                                  ? Colors.white
-                                  : Colors.black,
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Align(
+                          alignment: message.isSender
+                              ? Alignment.centerRight
+                              : Alignment.centerLeft,
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              crossAxisAlignment: message.isSender
+                                  ? CrossAxisAlignment.end
+                                  : CrossAxisAlignment.start,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: CustomTextWidget(
+                                    text: message.senderName,
+                                    fSize: 14.0,
+                                    fWeight: FontWeight.w600,
+                                    textColor: Colors.black54,
+                                  ),
+                                ),
+                                Container(
+                                  decoration: BoxDecoration(
+                                    color: message.isSender
+                                        ? AppColors.primaryColor
+                                        : Colors.grey.shade300,
+                                    borderRadius: BorderRadius.circular(12),
+                                  ),
+                                  padding: const EdgeInsets.all(12),
+                                  child: CustomTextWidget(
+                                    text: message.message,
+                                    fSize: 16,
+                                    textColor: message.isSender
+                                        ? Colors.white
+                                        : Colors.black,
+                                  ),
+                                ),
+                              ],
                             ),
                           ),
                         ),
-                      );
-                    },
-                  )),
+                      ],
+                    );
+                  },
+                ),
+              ),
             ),
           ],
         ),
@@ -134,13 +173,13 @@ class _ChatScreenState extends State<ChatScreen> {
                   ),
                   onPressed: () {
                     setState(() {
-                      WidgetsBinding.instance.addPostFrameCallback((_) {
+                      WidgetsBinding.instance!.addPostFrameCallback((_) {
                         scrollController
                             .jumpTo(scrollController.position.maxScrollExtent);
                       });
-                      if (chatController.length != 0) {
-                        chatMessages
-                            .add(ChatMessageModel(chatController.text, true));
+                      if (chatController.text.isNotEmpty) {
+                        chatMessages.add(
+                            ChatMessageModel('You', chatController.text, true));
                         chatController.clear();
                       }
                     });

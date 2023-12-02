@@ -1,6 +1,8 @@
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:sound_app/models/member_model.dart';
+import 'package:sound_app/utilities/utils.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
 
 import 'custom_searchbar.dart';
@@ -222,7 +224,10 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
                 fWeight: FontWeight.w500,
               ),
               TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  Utils().toastMessage('Challenge created successfully.');
+                  Get.back();
+                },
                 child: CustomTextWidget(
                   text: 'Create',
                   textColor: Colors.black,
@@ -230,7 +235,7 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
               ),
             ],
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 16.0),
           Container(
             // height: context.height * 0.1,
             decoration: BoxDecoration(
@@ -248,6 +253,7 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
                         label: CustomTextWidget(
                           text: 'Challenge Name',
                           fSize: 16.0,
+                          textColor: Colors.grey,
                         ),
                         prefixIcon: const Padding(
                           padding: EdgeInsets.only(right: 10.0),
@@ -260,9 +266,9 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
               ),
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 16.0),
           CustomTextWidget(text: 'Select File'),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 16.0),
           GestureDetector(
             onTap: () async {
               FilePickerResult? result = await FilePicker.platform.pickFiles(
@@ -290,16 +296,19 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
                     const Icon(Icons.add),
                     const SizedBox(width: 15.0),
                     CustomTextWidget(
-                        text: selectedFileName ?? 'Select Audio/Video File'),
+                      text: selectedFileName ?? 'Select Audio/Video File',
+                      fSize: 16.0,
+                      textColor: Colors.grey,
+                    ),
                   ],
                 ),
               ),
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 16.0),
           CustomTextWidget(
               text: 'Participants ${selectedMembers.length} OF 100'),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 16.0),
           Container(
             padding: const EdgeInsets.all(8.0),
             width: double.infinity,
@@ -320,7 +329,7 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
                             CircleAvatar(
                               backgroundColor: Colors.grey.shade200,
                               radius: 25,
-                              backgroundImage: NetworkImage(member.imageUrl),
+                              backgroundImage: AssetImage(member.imageUrl),
                             ),
                             Positioned(
                               top: 0,
@@ -349,7 +358,7 @@ class _AddMemberBottomSheetState extends State<AddMemberBottomSheet> {
               ),
             ),
           ),
-          const SizedBox(height: 8.0),
+          const SizedBox(height: 16.0),
         ],
       ),
     );

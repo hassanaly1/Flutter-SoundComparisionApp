@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sound_app/utilities/colors.dart';
-import 'package:sound_app/views/challenge/components/challenge_info_screen.dart';
+import 'package:sound_app/views/home/components/add_member_sheet.dart';
 import 'package:sound_app/views/home/home_screen.dart';
 import 'package:sound_app/views/profile/profile_screen.dart';
 
@@ -25,7 +25,7 @@ class _BottomBarState extends State<BottomBar> {
       case 0:
         return const HomeScreen();
       case 1:
-        return const ProfileScreen();
+        return ProfileScreen();
       default:
         return const HomeScreen();
     }
@@ -67,7 +67,7 @@ class _BottomBarState extends State<BottomBar> {
             context: context,
             isScrollControlled: true,
             builder: (BuildContext context) {
-              return const ChallengeInfoScreen();
+              return const AddMemberBottomSheet();
             },
           );
         },

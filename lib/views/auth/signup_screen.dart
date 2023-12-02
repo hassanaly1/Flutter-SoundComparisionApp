@@ -9,9 +9,19 @@ import 'package:sound_app/widgets/custom_button.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
 import 'package:sound_app/widgets/custom_textfield.dart';
 
-class SignupScreen extends StatelessWidget {
+class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
 
+  @override
+  State<SignupScreen> createState() => _SignupScreenState();
+}
+
+class _SignupScreenState extends State<SignupScreen> {
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController nameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmPasswordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -62,31 +72,48 @@ class SignupScreen extends StatelessWidget {
                 ],
               ),
               SizedBox(height: Get.height * 0.05),
-              const CustomTextField(
-                hintText: 'Name',
-              ),
-              SizedBox(height: Get.height * 0.02),
-              const CustomTextField(
-                hintText: 'Email',
-              ),
-              SizedBox(height: Get.height * 0.02),
-              const CustomTextField(
-                hintText: 'Password',
-              ),
-              SizedBox(height: Get.height * 0.02),
-              const CustomTextField(
-                hintText: 'Confirm Password',
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      hintText: 'Name',
+                      controller: nameController,
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    CustomTextField(
+                      hintText: 'Email',
+                      controller: emailController,
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    CustomTextField(
+                      hintText: 'Password',
+                      controller: passwordController,
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    CustomTextField(
+                      hintText: 'Confirm Password',
+                      controller: confirmPasswordController,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: Get.height * 0.03),
               CustomButtonWidget(
                 buttonText: 'Sign Up',
-                onTap: () {},
+                onTap: () {
+                  if (_formKey.currentState!.validate()) {
+                    Get.offAll(const LoginScreen(),
+                        transition: Transition.leftToRight);
+                    Utils().toastMessage('Account created successfully!');
+                  }
+                },
               ),
               SizedBox(height: Get.height * 0.02),
               InkWell(
                 onTap: () {
-                  Get.to(const LoginScreen(), transition: Transition.downToUp);
-                  Utils().toastMessage('Account created successfully!');
+                  Get.to(const LoginScreen(),
+                      transition: Transition.leftToRight);
                 },
                 child: RichText(
                   textAlign: TextAlign.center,

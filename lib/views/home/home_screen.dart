@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sound_app/models/group_model.dart';
 import 'package:sound_app/utilities/colors.dart';
+import 'package:sound_app/views/challenge/challenge_screen.dart';
 import 'package:sound_app/views/profile/profile_screen.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
 
@@ -58,20 +59,23 @@ class _HomeScreenState extends State<HomeScreen> {
               Expanded(
                 child: ListView(
                   children: [
-                    ListView.builder(
-                      itemCount: groups.length,
-                      shrinkWrap: true,
-                      physics: AlwaysScrollableScrollPhysics(),
-                      itemBuilder: (context, index) {
-                        ChallengeModel group = groups[index];
-                        Color groupColor = Colors.orange.shade200;
+                    SingleChildScrollView(
+                      child: ListView.builder(
+                        itemCount: groups.length,
+                        shrinkWrap: true,
+                        physics: NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          ChallengeModel group = groups[index];
+                          Color groupColor = Colors.orange.shade200;
 
-                        return CustomChallengeContainer(
-                          challengeName: group.name,
-                          challengeMembersCount: group.membersCount,
-                          color: groupColor,
-                        );
-                      },
+                          return CustomChallengeContainer(
+                            onTap: () => Get.to(ChallengeScreen()),
+                            challengeName: group.name,
+                            challengeMembersCount: group.membersCount,
+                            color: groupColor,
+                          );
+                        },
+                      ),
                     ),
                   ],
                 ),

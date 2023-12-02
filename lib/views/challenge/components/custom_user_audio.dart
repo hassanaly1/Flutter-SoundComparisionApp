@@ -1,6 +1,5 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_sound/flutter_sound.dart';
-import 'package:permission_handler/permission_handler.dart';
 import 'package:sound_app/utilities/colors.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
 
@@ -12,74 +11,99 @@ class CustomUserAudio extends StatefulWidget {
 }
 
 class _CustomUserAudioState extends State<CustomUserAudio> {
-  final recorder = FlutterSoundRecorder();
+  final audioPlayer = AudioPlayer();
+  bool isPlaying = false;
+  late Source audioUrl;
+  Duration duration = Duration.zero;
+  Duration position = Duration.zero;
 
   @override
   void initState() {
     super.initState();
-    initRecorder();
+
+    audioPlayer.onPlayerStateChanged.listen((event) {
+      setState(() {
+        isPlaying = event == PlayerState.playing;
+      });
+    });
+
+    audioPlayer.onDurationChanged.listen((newDuration) {
+      setState(() {
+        duration = newDuration;
+      });
+    });
+
+    audioPlayer.onPositionChanged.listen((newPosition) {
+      setState(() {
+        position = newPosition;
+      });
+    });
   }
 
   @override
   void dispose() {
-    recorder.closeRecorder();
+    audioPlayer.dispose();
     super.dispose();
-  }
-
-  Future<void> record() async {
-    await recorder.startRecorder(toFile: 'audio');
-  }
-
-  Future<void> stop() async {
-    await recorder.stopRecorder();
-  }
-
-  Future<void> initRecorder() async {
-    final status = await Permission.microphone.request();
-
-    if (status == PermissionStatus.granted) {
-      debugPrint('Microphone permission granted. Initializing recorder...');
-    } else {
-      throw ('Microphone permission denied or restricted.');
-    }
-    await recorder.openRecorder();
   }
 
   @override
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        backgroundColor: AppColors.backgroundColor,
-        body: Center(
+        backgroundColor: Colors.grey.shade400,
+        body: Padding(
+          padding: const EdgeInsets.all(8.0),
           child: Column(
-            mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              StreamBuilder<RecordingDisposition>(
-                stream: recorder.onProgress,
-                builder: (context, snapshot) {
-                  final duration = snapshot.hasData
-                      ? snapshot.data!.duration
-                      : Duration.zero;
-
-                  return CustomTextWidget(
-                    text: '${duration.inSeconds} sec',
-                    fSize: 20.0,
-                  );
-                },
+              CustomTextWidget(
+                text: 'James',
+                fSize: 16.0,
               ),
-              ElevatedButton(
-                onPressed: () async {
-                  if (recorder.isRecording) {
-                    await stop();
-                    setState(() {});
-                  } else {
-                    await record();
-                    setState(() {});
-                  }
-                },
-                child: Icon(
-                  recorder.isRecording ? Icons.stop : Icons.mic,
-                  size: 50,
+              SizedBox(height: 10.0),
+              Container(
+                padding: const EdgeInsets.all(12.0),
+                decoration: BoxDecoration(
+                    color: AppColors.primaryColor,
+                    borderRadius: BorderRadius.circular(12.0)),
+                child: Column(
+                  children: [
+                    Row(
+                      children: [
+                        IconButton(
+                            onPressed: () async {
+                              if (isPlaying) {
+                                await audioPlayer.pause();
+                                debugPrint('Audio is paused');
+                              } else {
+                                audioUrl = UrlSource(
+                                    'https://www.chosic.com/similar-songs/track/5aIVCx5tnk0ntmdiinnYvw');
+
+                                await audioPlayer.play(audioUrl);
+                                debugPrint('Audio is playing');
+                              }
+                            },
+                            icon: Icon(
+                              Icons.play_circle,
+                              color: Colors.black,
+                              size: 30,
+                            )),
+                        Slider(
+                          min: 0,
+                          max: duration.inSeconds.toDouble(),
+                          value: position.inSeconds.toDouble(),
+                          onChanged: (value) async {},
+                        ),
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        CustomTextWidget(text: formatTime(position)),
+                        CustomTextWidget(text: formatTime(duration - position)),
+                      ],
+                    )
+                  ],
                 ),
               ),
             ],
@@ -87,5 +111,18 @@ class _CustomUserAudioState extends State<CustomUserAudio> {
         ),
       ),
     );
+  }
+
+  String formatTime(Duration duration) {
+    String twoDigits(int n) => n.toString().padLeft(2, '0');
+    final hours = twoDigits(duration.inHours);
+    final minutes = twoDigits(duration.inMinutes.remainder(60));
+    final seconds = twoDigits(duration.inSeconds.remainder(60));
+
+    return [
+      if (duration.inHours > 0) hours,
+      minutes,
+      seconds,
+    ].join(':');
   }
 }

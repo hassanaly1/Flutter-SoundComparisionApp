@@ -3,12 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:sound_app/models/member_model.dart';
 import 'package:sound_app/utilities/colors.dart';
+import 'package:sound_app/utilities/utils.dart';
+import 'package:sound_app/views/challenge/components/edit_info_dialog.dart';
 import 'package:sound_app/views/home/components/custom_member.dart';
 import 'package:sound_app/widgets/custom_button.dart';
 import 'package:sound_app/widgets/custom_text_widget.dart';
-import 'package:sound_app/widgets/custom_textfield.dart';
 
-import '../../home/components/custom_searchbar.dart';
+import '../home/components/custom_searchbar.dart';
 
 class ChallengeInfoScreen extends StatefulWidget {
   const ChallengeInfoScreen({super.key});
@@ -46,88 +47,85 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.backgroundColor,
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(16.0),
-          child: Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  IconButton(
-                      onPressed: () {
-                        Get.back();
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          children: [
+            const SizedBox(height: 16.0),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    icon: const Icon(Icons.arrow_back)),
+                CustomTextWidget(
+                    text: 'Group Info', fSize: 18.0, fWeight: FontWeight.w500),
+                TextButton(
+                    onPressed: () {
+                      Get.back();
+                    },
+                    child: InkWell(
+                      onTap: () {
+                        buildEditInfoDialog(context);
                       },
-                      icon: const Icon(Icons.arrow_back)),
-                  CustomTextWidget(
-                      text: 'Group Info',
-                      fSize: 18.0,
-                      fWeight: FontWeight.w500),
-                  TextButton(
-                      onPressed: () {
-                        Get.back();
-                      },
-                      child: InkWell(
-                        onTap: () {
-                          buildEditInfoDialog(context);
-                        },
-                        child: CustomTextWidget(text: 'Edit', fSize: 16.0),
-                      ))
-                ],
-              ),
-              const SizedBox(height: 8.0),
-              ClipOval(
-                child: Image.asset('assets/images/user.jpg', height: 80),
-              ),
-              const SizedBox(height: 8.0),
-              CustomTextWidget(
-                  text: 'Tone Twisters', fWeight: FontWeight.w500, fSize: 18),
-              CustomTextWidget(
-                  text: '7 participants', fWeight: FontWeight.w200, fSize: 14),
-              const Divider(endIndent: 20.0, indent: 20.0),
-              const SizedBox(height: 8.0),
-              GestureDetector(
-                onTap: () async {
-                  FilePickerResult? result =
-                      await FilePicker.platform.pickFiles(
-                    type: FileType.custom,
-                    allowedExtensions: ['mp3', 'mp4', 'avi', 'mov', 'wmv'],
-                  );
+                      child: CustomTextWidget(text: 'Edit', fSize: 16.0),
+                    ))
+              ],
+            ),
+            const SizedBox(height: 16.0),
+            ClipOval(
+              child: Image.asset('assets/images/user.jpg', height: 80),
+            ),
+            const SizedBox(height: 16.0),
+            CustomTextWidget(
+                text: 'Tone Twisters', fWeight: FontWeight.w500, fSize: 20),
+            CustomTextWidget(
+                text: '7 participants', fWeight: FontWeight.w200, fSize: 16),
+            const Divider(endIndent: 20.0, indent: 20.0),
+            const SizedBox(height: 16.0),
+            GestureDetector(
+              onTap: () async {
+                FilePickerResult? result = await FilePicker.platform.pickFiles(
+                  type: FileType.custom,
+                  allowedExtensions: ['mp3', 'mp4', 'avi', 'mov', 'wmv'],
+                );
 
-                  if (result != null) {
-                    selectedFileName = result.files.single.name;
-                    debugPrint('Selected file: ${result.files.single.path}');
-                  }
+                if (result != null) {
+                  selectedFileName = result.files.single.name;
+                  debugPrint('Selected file: ${result.files.single.path}');
+                }
 
-                  setState(() {});
-                },
-                child: Container(
-                  // height: context.height * 0.1,
-                  decoration: BoxDecoration(
-                      color: Colors.grey.shade200,
-                      borderRadius: BorderRadius.circular(16.0)),
-                  child: Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16.0, vertical: 8.0),
-                    child: Row(
-                      children: [
-                        const Icon(Icons.edit),
-                        const SizedBox(width: 15.0),
-                        CustomTextWidget(
-                            text:
-                                selectedFileName ?? 'Select Audio/Video File'),
-                      ],
-                    ),
+                setState(() {});
+              },
+              child: Container(
+                // height: context.height * 0.1,
+                decoration: BoxDecoration(
+                    color: Colors.grey.shade200,
+                    borderRadius: BorderRadius.circular(16.0)),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 16.0, vertical: 8.0),
+                  child: Row(
+                    children: [
+                      const Icon(Icons.edit),
+                      const SizedBox(width: 15.0),
+                      CustomTextWidget(
+                        text: selectedFileName ?? 'Select Audio/Video File',
+                        textColor: Colors.grey,
+                        fSize: 16.0,
+                      ),
+                    ],
                   ),
                 ),
               ),
-              const SizedBox(height: 16.0),
-              CustomTextWidget(
-                text: '7 Participants',
-                fSize: 16.0,
-              ),
-              const SizedBox(height: 8.0),
-              Container(
+            ),
+            const SizedBox(height: 16.0),
+            CustomTextWidget(text: '7 Participants', fSize: 16.0),
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: Container(
                 padding: const EdgeInsets.symmetric(
                     vertical: 12.0, horizontal: 16.0),
                 decoration: BoxDecoration(
@@ -156,42 +154,60 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(width: 20.0),
-                    (members.isEmpty)
-                        ? Padding(
-                            padding: const EdgeInsets.symmetric(vertical: 20.0),
-                            child: CustomTextWidget(
-                              text: 'No Members',
-                              fSize: 14.0,
-                            ),
-                          )
-                        : ListView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            itemCount: members.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  buildShowModalBottomSheet(context, index);
+                    const Divider(),
+                    Expanded(
+                      child: (members.isEmpty)
+                          ? Padding(
+                              padding:
+                                  const EdgeInsets.symmetric(vertical: 20.0),
+                              child: CustomTextWidget(
+                                text: 'No Members',
+                                fSize: 14.0,
+                              ),
+                            )
+                          : SingleChildScrollView(
+                              child: ListView.separated(
+                                separatorBuilder: (context, index) {
+                                  return Divider();
                                 },
-                                child: CustomMember(
-                                  members: members,
-                                  index: index,
-                                ),
-                              );
-                            },
-                          )
+                                shrinkWrap: true,
+                                physics: const NeverScrollableScrollPhysics(),
+                                itemCount: members.length,
+                                itemBuilder: (context, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      buildRemoveMemberBottomSheet(
+                                          context, index);
+                                    },
+                                    child: CustomMember(
+                                      members: members,
+                                      index: index,
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                    )
                   ],
                 ),
-              )
-            ],
-          ),
+              ),
+            )
+          ],
         ),
       ),
     );
   }
 
-  Future<dynamic> buildShowModalBottomSheet(BuildContext context, int index) {
+  Future<dynamic> buildRemoveMemberBottomSheet(
+      BuildContext context, int index) {
+    // Check if index is within the valid range
+    if (index < 0 || index >= members.length) {
+      return Future.value(); // Do nothing if the index is invalid
+    }
+
+    // Store the removed member in a variable
+    Member removedMember = members[index];
+
     return showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
@@ -208,12 +224,12 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
                     Row(
                       children: [
                         CircleAvatar(
-                          backgroundImage: AssetImage(members[index].imageUrl),
+                          backgroundImage: AssetImage(removedMember.imageUrl),
                           radius: 20,
                         ),
                         const SizedBox(width: 15.0),
                         CustomTextWidget(
-                          text: members[index].name,
+                          text: removedMember.name,
                           fSize: 14.0,
                         ),
                         const Spacer(),
@@ -226,11 +242,14 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
                       ],
                     ),
                     CustomButtonWidget(
+                      width: 200,
                       buttonText: 'Remove Participant',
                       onTap: () {
-                        if (index >= 0 && index < members.length) {
-                          members.removeAt(index);
-                        }
+                        // Remove the stored member from the list
+                        members.remove(removedMember);
+
+                        Utils().toastMessage(
+                            '${removedMember.name} has been removed from the challenge.');
                         Get.back();
                         setState(() {});
                       },
@@ -240,54 +259,6 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
               ),
             );
           },
-        );
-      },
-    );
-  }
-
-  Future<dynamic> buildEditInfoDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.grey.shade200,
-          title: CustomTextWidget(
-            text: 'Edit Challenge Info',
-            fSize: 16.0,
-          ),
-          content: SingleChildScrollView(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                ClipOval(
-                  child: Image.asset('assets/images/user.jpg', height: 80),
-                ),
-                const SizedBox(height: 15.0),
-                CustomTextField(
-                  hintText: 'Tone Twisters',
-                  controller: nameController,
-                ),
-              ],
-            ),
-          ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-              child: CustomTextWidget(
-                text: 'Cancel',
-                textColor: Colors.redAccent,
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                debugPrint('Updated Name: ${nameController.text}');
-                Navigator.of(context).pop();
-              },
-              child: CustomTextWidget(text: 'Save'),
-            ),
-          ],
         );
       },
     );
@@ -401,7 +372,7 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
                 return ListTile(
                   leading: CircleAvatar(
                     backgroundColor: Colors.red,
-                    backgroundImage: NetworkImage(member.imageUrl),
+                    backgroundImage: AssetImage(member.imageUrl),
                   ),
                   title: CustomTextWidget(
                     text: member.name,
@@ -424,14 +395,14 @@ class _ChallengeInfoScreenState extends State<ChallengeInfoScreen> {
   }
 
   void handleCheckboxChanged(bool? value, Member member) {
-    if (value != null && value) {
-      setState(() {
+    setState(() {
+      if (value != null && value) {
         selectedMembers.add(member);
-      });
-    } else {
-      setState(() {
+        filteredMembers.remove(member);
+      } else {
         selectedMembers.remove(member);
-      });
-    }
+        filteredMembers.add(member);
+      }
+    });
   }
 }

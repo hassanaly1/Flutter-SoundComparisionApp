@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:social_media_recorder/audio_encoder_type.dart';
+import 'package:social_media_recorder/screen/social_media_recorder.dart';
+import 'package:sound_app/utilities/colors.dart';
 import 'package:sound_app/views/challenge/components/custom_user_audio.dart';
 
 class AudioScreen extends StatefulWidget {
@@ -12,32 +15,36 @@ class _AudioScreenState extends State<AudioScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: Colors.transparent, body: CustomUserAudio());
+      backgroundColor: Colors.green,
+      body: CustomUserAudio(),
+      bottomNavigationBar: Container(
+        height: 50,
+        color: Colors.grey.shade200,
+        child: SocialMediaRecorder(
+          backGroundColor: Colors.grey.shade200,
+          cancelTextBackGroundColor: Colors.red,
+          lockButton: const Icon(
+            Icons.lock_outline_rounded,
+            color: AppColors.primaryColor,
+          ),
+          maxRecordTimeInSecond: 5,
+          initRecordPackageWidth: 60,
+          // function called when start recording
+          startRecording: () {},
+          // function called when stop recording, return the recording time
+          stopRecording: (time) {
+            debugPrint(time);
+          },
+          sendRequestFunction: (soundFile, time) {
+//  print("the current path is ${soundFile.path}");
+            debugPrint(soundFile.path);
+          },
+          encode: AudioEncoderType.AAC,
+        ),
+      ),
+    );
   }
 }
-//       bottomNavigationBar: Align(
-//         alignment: Alignment.bottomCenter,
-//         child: SocialMediaRecorder(
-//           backGroundColor: Colors.grey.shade200,
-//           cancelTextBackGroundColor: Colors.red,
-//           lockButton: const Icon(Icons.lock_outline_rounded),
-//           maxRecordTimeInSecond: 5,
-//           initRecordPackageWidth: 60,
-//           startRecording: () {
-// // function called when start recording
-//           },
-//           stopRecording: (_time) {
-//             print(_time);
-// // function called when stop recording, return the recording time
-//           },
-//           sendRequestFunction: (soundFile, _time) {
-// //  print("the current path is ${soundFile.path}");
-//             print(soundFile.path);
-//           },
-//           encode: AudioEncoderType.AAC,
-//         ),
-//       ),
-//
 
 // Padding(
 // padding: const EdgeInsets.only(left: 10, right: 10, top: 30),

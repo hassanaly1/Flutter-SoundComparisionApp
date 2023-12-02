@@ -15,7 +15,6 @@ class CustomMember extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        const Divider(),
         Row(
           children: [
             CircleAvatar(

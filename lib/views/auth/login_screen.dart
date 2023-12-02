@@ -22,7 +22,9 @@ class LoginScreen extends StatefulWidget {
 
 class _LoginScreenState extends State<LoginScreen> {
   bool isChecked = false;
-
+  final _formKey = GlobalKey<FormState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,12 +84,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 textColor: AppColors.textColor,
               ),
               SizedBox(height: Get.height * 0.02),
-              const CustomTextField(
-                hintText: 'Email',
-              ),
-              SizedBox(height: Get.height * 0.02),
-              const CustomTextField(
-                hintText: 'Password',
+              Form(
+                key: _formKey,
+                child: Column(
+                  children: [
+                    CustomTextField(
+                      hintText: 'Email',
+                      controller: emailController,
+                    ),
+                    SizedBox(height: Get.height * 0.02),
+                    CustomTextField(
+                      hintText: 'Password',
+                      controller: passwordController,
+                    ),
+                  ],
+                ),
               ),
               SizedBox(height: Get.height * 0.03),
               Row(
@@ -117,7 +128,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   TextButton(
                       onPressed: () {
                         Get.to(VerifyNumberScreen(),
-                            transition: Transition.rightToLeft);
+                            transition: Transition.downToUp);
                       },
                       child: CustomTextWidget(
                         text: 'Forgot password?',
@@ -131,14 +142,18 @@ class _LoginScreenState extends State<LoginScreen> {
               CustomButtonWidget(
                 buttonText: 'Sign in',
                 onTap: () {
-                  Get.to(const BottomBar(), transition: Transition.downToUp);
-                  Utils().toastMessage('Login successfully!');
+                  if (_formKey.currentState!.validate()) {
+                    Get.offAll(const BottomBar(),
+                        transition: Transition.downToUp);
+                    Utils().toastMessage('Login successfully!');
+                  }
                 },
               ),
               SizedBox(height: Get.height * 0.02),
               InkWell(
                 onTap: () {
-                  Get.to(const SignupScreen(), transition: Transition.downToUp);
+                  Get.to(const SignupScreen(),
+                      transition: Transition.rightToLeft);
                 },
                 child: RichText(
                   textAlign: TextAlign.center,

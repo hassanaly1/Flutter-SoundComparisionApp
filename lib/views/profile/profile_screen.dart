@@ -8,10 +8,12 @@ import 'package:sound_app/widgets/custom_text_widget.dart';
 import 'package:sound_app/widgets/reusable_profile_tabs.dart';
 
 class ProfileScreen extends StatefulWidget {
-  const ProfileScreen({super.key});
+  ProfileScreen({super.key});
 
   @override
   State<ProfileScreen> createState() => _ProfileScreenState();
+  bool isMode = false;
+  bool isNotification = false;
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
@@ -45,8 +47,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ReUsableProfileTabs(
                 text: 'Mode',
                 suffix: Switch(
-                  value: true,
-                  onChanged: (value) {},
+                  value: widget.isMode,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.isMode = value;
+                    });
+                  },
                 ),
                 onTap: () {
                   Get.to(AccountInfo(), transition: Transition.rightToLeft);
@@ -55,8 +61,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ReUsableProfileTabs(
                 text: 'Notifications',
                 suffix: Switch(
-                  value: true,
-                  onChanged: (value) {},
+                  value: widget.isNotification,
+                  onChanged: (value) {
+                    setState(() {
+                      widget.isNotification = value;
+                    });
+                  },
                 ),
                 onTap: () {
                   Get.to(AccountInfo(), transition: Transition.rightToLeft);

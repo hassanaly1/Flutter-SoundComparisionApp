@@ -1,6 +1,7 @@
 class ChatMessageModel {
-  final String message;
-  final bool isSender;
+  String senderName;
+  String message;
+  bool isSender;
 
-  ChatMessageModel(this.message, this.isSender);
+  ChatMessageModel(this.senderName, this.message, this.isSender);
 }

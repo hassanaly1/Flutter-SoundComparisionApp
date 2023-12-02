@@ -42,12 +42,8 @@ dependencies:
   pinput: ^3.0.1
   fl_country_code_picker: ^0.1.7+1
   file_picker: ^6.1.1
-  voice_message_package: ^2.0.0
-  assets_audio_player: ^3.1.1
   social_media_recorder: ^1.1.1
   audio_waveforms: ^1.0.4
-  chewie_audio: ^1.5.0
-  audio_video_progress_bar: ^2.0.1
   audioplayers: ^5.2.1
   flutter_sound: ^9.2.13
 

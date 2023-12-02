@@ -97,7 +97,7 @@ class _OtpScreenState extends State<OtpScreen> {
                     showCursor: true,
                     onCompleted: (pin) {
                       if (pin == '2222') {
-                        Get.to(const BottomBar(),
+                        Get.offAll(const BottomBar(),
                             transition: Transition.downToUp);
                         Utils().toastMessage('Login successfully!');
                       }

@@ -15,10 +15,11 @@ class ReUsableProfileTabs extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
-      child: InkWell(
-        onTap: onTap,
+    return InkWell(
+      highlightColor: Colors.transparent,
+      onTap: onTap,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
         child: Row(
           children: [
             Icon(icon),

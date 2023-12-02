@@ -41,6 +41,12 @@ class CustomTextField extends StatelessWidget {
         ),
         hintText: hintText,
       ),
+      validator: (value) {
+        if (value!.isEmpty) {
+          return '$hintText field is required';
+        }
+        return null;
+      },
     );
   }
 }
